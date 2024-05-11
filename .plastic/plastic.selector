@@ -1,0 +1,4 @@
+repository "JumpyJack@TworzenieGier@cloud"
+  path "/"
+    br "/main"
+    co "/main"
