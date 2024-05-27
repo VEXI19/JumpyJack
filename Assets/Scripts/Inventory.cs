@@ -1,69 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-    public static Inventory Instance = new();
+    private bool _doubleJump = false;
+    private bool _climbing = false;
+    private bool _umbrella = false;
+    private bool _hologram = false;
 
-    [SerializeField] private bool _hasDoubleJump = false;
-    [SerializeField] private bool _hasClimbing = false;
-    [SerializeField] private bool _hasUmbrella = false;
-    [SerializeField] private bool _hasHologram = false;
+    private bool _hologramUsed = false;
 
-    public enum PowerUps
-    {
-        DOUBLE_JUMP,
-        CLIMBING,
-        UMBRELLA,
-        HOLOGRAM
-    }
+    private GameObject holo;
 
-    public bool HasDoubleJump
-    {
-        get => _hasDoubleJump;
-    }
+    public void ActivateDoubleJump() { _doubleJump = true; }
 
-    public bool HasClimbing
-    {
-        get => _hasClimbing;
-    }
+    public void ActivateClimbing() { _climbing = true; }
 
-    public bool HasUmbrella
-    {
-        get => _hasUmbrella;
-    }
+    public void ActivateUmbrella() { _umbrella = true; }
 
-    public bool HasHologram
+    public void ActivateHologram() { _hologram = true; }
+
+    public bool DoubleJump { get => _doubleJump; }
+
+    public bool Climbing { get => _climbing; }
+
+    public bool Umbrella { get => _umbrella; }
+
+    public bool Hologram { get => _hologram; }
+
+    private void Update()
     {
-        get => _hasHologram;
-    }
-    public void AddPowerUp(PowerUps powerUp)
-    {
-        switch (powerUp)
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            case (PowerUps.DOUBLE_JUMP):
-                {
-                    _hasDoubleJump = true;
-                    break;
-                }
-            case (PowerUps.CLIMBING):
-                {
-                    _hasClimbing = true;
-                    break;
-                }
-            case (PowerUps.HOLOGRAM):
-                {
-                    _hasHologram = true;
-                    break;
-                }
-            case (PowerUps.UMBRELLA):
-                {
-                    _hasUmbrella = true;
-                    break;
-                }
+            Debug.Log(!_hologram);
         }
+
+
+        if (Input.GetKeyDown(KeyCode.G) && _hologram)
+        {
+            if (!_hologramUsed)
+            {
+                holo = Instantiate(this.gameObject, position: this.transform.position, this.transform.rotation);
+                _hologramUsed = true;
+                
+                MonoBehaviour[] scripts = holo.GetComponents<MonoBehaviour>();
+                foreach (MonoBehaviour script in scripts)
+                {
+                    script.enabled = false;
+                }
+
+                BoxCollider2D[] boxColliders = holo.GetComponents<BoxCollider2D>();
+                foreach (BoxCollider2D bc in boxColliders)
+                {
+                    bc.excludeLayers = LayerMask.GetMask("Default");
+                }
+
+                for (var i = holo.transform.childCount - 1; i >= 0; i--)
+                {
+                    Object.Destroy(holo.transform.GetChild(i).gameObject);
+                }
+            }
+
+            else
+            {
+                Destroy(holo);
+                _hologramUsed = false;
+            }
+
+
+        }
+
+       
+
     }
+
 }
+ 

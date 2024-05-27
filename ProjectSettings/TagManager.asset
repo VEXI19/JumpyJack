@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - DoubleJump
+  - DoubleJumpPowerUp
+  - ClimbingPowerUp
+  - UmbrellaPowerUp
+  - HologramPowerUp
+  - Ground
   layers:
   - Default
   - TransparentFX
