@@ -6,20 +6,26 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
+    public int jumpCount = 0;
 
     [SerializeField] private float speed = 8f;
     [SerializeField] private float jumpingPower = 16f;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform groundCheckLeft;
+    [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
-    
+    [SerializeField] private InventoryManager inventoryManager;
+
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        int maxJumpCount = inventoryManager.DoubleJump ? 2 : 1;
+
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
         {
+            jumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
@@ -28,23 +34,22 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if (Inventory.Instance.HasDoubleJump)
-        {
-            speed = 20f;
-        }
-
         Flip();
-        
     }
+
+    public void Climb()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, speed);
+    }
+
+    public void ResetJumpCount() 
+    {
+        jumpCount = 0;
+    } 
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
     private void Flip()
