@@ -2,12 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Collisions : MonoBehaviour
 {
     private void OnCollisionStay(UnityEngine.Collision target)
     {
         
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Checkpoints checkpoints = this.gameObject.GetComponent<Checkpoints>();
+
+        if (collision.gameObject.CompareTag("Checkpoint") && Input.GetKey(KeyCode.S))
+        {
+            Vector3 newPosition = collision.gameObject.transform.position;
+            newPosition.y++;
+            checkpoints.SaveNewCheckpoint(newPosition);
+        }
     }
     private void OnCollisionEnter2D(UnityEngine.Collision2D target)
     {
@@ -34,7 +47,6 @@ public class Collisions : MonoBehaviour
             inventoryManager.ActivateHologram();
         }
 
-        
 
         
     }
