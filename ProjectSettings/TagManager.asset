@@ -9,6 +9,7 @@ TagManager:
   - UmbrellaPowerUp
   - HologramPowerUp
   - Ground
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
