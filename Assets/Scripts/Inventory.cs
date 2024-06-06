@@ -32,6 +32,7 @@ public class InventoryManager : MonoBehaviour
     public bool Umbrella { get => _umbrella; }
 
     public bool Hologram { get => _hologram; }
+    public bool HologramUsed { get => _hologramUsed; }
 
     private void Update()
     {

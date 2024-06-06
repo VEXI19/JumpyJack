@@ -10,6 +10,7 @@ TagManager:
   - HologramPowerUp
   - Ground
   - Checkpoint
+  - Toxic
   layers:
   - Default
   - TransparentFX

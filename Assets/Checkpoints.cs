@@ -6,6 +6,9 @@ using UnityEngine;
 public class Checkpoints : MonoBehaviour
 {
     private Vector3 _savedCheckpoint;
+
+    public Vector3 SavedCheckpoint { get => _savedCheckpoint; }
+
     // Start is called before the first frame update
     void Start()
     {
