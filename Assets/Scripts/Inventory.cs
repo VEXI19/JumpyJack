@@ -17,21 +17,26 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject holo;
 
-    public void ActivateDoubleJump() { _doubleJump = true; }
+    public Vector3 posDoublejump = Vector3.zero;
+    public Vector3 posClimbing = Vector3.zero;
+    public Vector3 posUmbrella = Vector3.zero;
+    public Vector3 posHologram = Vector3.zero;
 
-    public void ActivateClimbing() { _climbing = true; }
+    public void ActivateDoubleJump(Vector3 pos) { _doubleJump = true; posDoublejump = pos; }
 
-    public void ActivateUmbrella() { _umbrella = true; }
+    public void ActivateClimbing(Vector3 pos) { _climbing = true; posClimbing = pos; }
 
-    public void ActivateHologram() { _hologram = true; }
+    public void ActivateUmbrella(Vector3 pos) { _umbrella = true; posUmbrella = pos; }
 
-    public bool DoubleJump { get => _doubleJump; }
+    public void ActivateHologram(Vector3 pos) { _hologram = true; posHologram = pos; }
 
-    public bool Climbing { get => _climbing; }
+    public bool DoubleJump { get => _doubleJump; set => _doubleJump = value; }
 
-    public bool Umbrella { get => _umbrella; }
+    public bool Climbing { get => _climbing; set => _climbing = value; }
 
-    public bool Hologram { get => _hologram; }
+    public bool Umbrella { get => _umbrella; set => _umbrella = value; }
+
+    public bool Hologram { get => _hologram; set => _hologram = value; }
     public bool HologramUsed { get => _hologramUsed; }
 
     private void Update()
