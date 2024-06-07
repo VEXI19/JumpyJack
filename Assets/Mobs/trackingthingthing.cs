@@ -33,9 +33,9 @@ public class trackingthingthing : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D target)
     {
-        if (target.gameObject.CompareTag("Ground"))
+        if (target.gameObject.CompareTag("Ground") || target.gameObject.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.02f);
         }
     }
 }

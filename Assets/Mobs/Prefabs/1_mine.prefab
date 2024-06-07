@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5547339705544212349}
   - component: {fileID: 1901587354826095376}
   - component: {fileID: 7311649758204441458}
+  - component: {fileID: -6278962186611718751}
   m_Layer: 6
   m_Name: 1_mine
   m_TagString: Toxic
@@ -158,3 +159,15 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-6278962186611718751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3293271464896364286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547277a4c50c7d540b349a26a07a29e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
