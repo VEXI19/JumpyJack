@@ -29,22 +29,22 @@ public class Collisions : MonoBehaviour
         
         if (target.gameObject.CompareTag("DoubleJumpPowerUp"))
         {
-            inventoryManager.ActivateDoubleJump();
+            inventoryManager.ActivateDoubleJump(target.transform.position);
         }
 
         if (target.gameObject.CompareTag("ClimbingPowerUp"))
         {
-            inventoryManager.ActivateClimbing();
+            inventoryManager.ActivateClimbing(target.transform.position);
         }
 
         if (target.gameObject.CompareTag("UmbrellaPowerUp"))
         {
-            inventoryManager.ActivateUmbrella();
+            inventoryManager.ActivateUmbrella(target.transform.position);
         }
 
         if (target.gameObject.CompareTag("HologramPowerUp"))
         {
-            inventoryManager.ActivateHologram();
+            inventoryManager.ActivateHologram(target.transform.position);
         }
 
 
