@@ -20,6 +20,13 @@ public class Collisions : MonoBehaviour
             Vector3 newPosition = collision.gameObject.transform.position;
             newPosition.y++;
             checkpoints.SaveNewCheckpoint(newPosition);
+
+            collision.gameObject.GetComponent<Animator>().Play("checkpoint_active");
+            foreach (var chk in GameObject.FindGameObjectsWithTag("Checkpoint"))
+            {
+                if (collision.gameObject.GetInstanceID() == chk.GetInstanceID()) continue;
+                chk.GetComponent<Animator>().Play("checkpoint");
+            }
         }
     }
     private void OnCollisionEnter2D(UnityEngine.Collision2D target)
