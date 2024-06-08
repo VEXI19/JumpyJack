@@ -26,4 +26,14 @@ public class Checkpoints : MonoBehaviour
     {
         _savedCheckpoint = new Vector3(newCheckpoint.x, newCheckpoint.y, newCheckpoint.z);
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Checkpoint") && Input.GetKey(KeyCode.S))
+        {
+            Vector3 newPosition = collision.gameObject.transform.position;
+            newPosition.y++;
+            SaveNewCheckpoint(newPosition);
+        }
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
+    private float vertical;
     private bool isFacingRight = true;
     public int jumpCount = 0;
 
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
 
         int maxJumpCount = inventoryManager.DoubleJump ? 2 : 1;
 
@@ -39,7 +41,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Climb()
     {
-        rb.velocity = new Vector2(rb.velocity.x, speed);
+        rb.velocity = new Vector2(rb.velocity.x, horizontal * speed);
+    }
+
+    public void WallFall()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+    }
+
+    public void WallFallClimb()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.9f);
     }
 
     public void ResetJumpCount() 

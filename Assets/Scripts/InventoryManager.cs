@@ -12,9 +12,7 @@ public class InventoryManager : MonoBehaviour
     private bool _climbing = false;
     private bool _umbrella = false;
     private bool _hologram = false;
-
     private bool _hologramUsed = false;
-
     private GameObject holo;
 
     public void ActivateDoubleJump() { _doubleJump = true; }
@@ -32,6 +30,26 @@ public class InventoryManager : MonoBehaviour
     public bool Umbrella { get => _umbrella; }
 
     public bool Hologram { get => _hologram; }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("DoubleJumpPowerUp"))
+        {
+            _doubleJump = true;
+        }
+        if (collision.gameObject.CompareTag("ClimbingPowerUp"))
+        {
+            _climbing = true;
+        }
+        if (collision.gameObject.CompareTag("UmbrellaPowerUp"))
+        {
+            _umbrella = true;
+        }
+        if (collision.gameObject.CompareTag("HologramPowerUp"))
+        {
+            _hologram = true;
+        }
+    }
 
     private void Update()
     {
@@ -73,6 +91,16 @@ public class InventoryManager : MonoBehaviour
             }
 
 
+        }
+
+        if (_hologramUsed)
+        {
+            float distance = Vector3.Distance(holo.transform.position, transform.position);
+            if (distance > 13f)
+            {
+                Destroy(holo);
+                _hologramUsed = false;
+            }
         }
 
        

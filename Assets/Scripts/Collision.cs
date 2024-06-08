@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    public void OnCollisionEnter2D(Collision2D target)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (target.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
         }
