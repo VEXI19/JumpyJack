@@ -36,4 +36,10 @@ public class userinterface : MonoBehaviour
             panel.gameObject.SetActive(true);
         }
     }
+
+    public void resetprogress()
+    {
+        PlayerPrefs.DeleteAll();
+        GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<progressmanager>().Start();
+    }
 }
