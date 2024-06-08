@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
+    private float vertical;
     private bool isFacingRight = true;
+    public int jumpCount = 0;
     public int jumpCount = 0;
 
     [SerializeField] private float speed = 8f;
@@ -14,17 +16,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
+    [SerializeField] private Transform groundCheckLeft;
+    [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private InventoryManager inventoryManager;
+
     [SerializeField] private InventoryManager inventoryManager;
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
+        int maxJumpCount = inventoryManager.DoubleJump ? 2 : 1;
 
         int maxJumpCount = inventoryManager.DoubleJump ? 2 : 1;
 
         if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount)
         {
+            jumpCount++;
             jumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
@@ -40,6 +51,27 @@ public class PlayerMovement : MonoBehaviour
     public void Climb()
     {
         rb.velocity = new Vector2(rb.velocity.x, speed);
+    }
+
+    public void ResetJumpCount() 
+    {
+        jumpCount = 0;
+    } 
+    }
+
+    public void Climb()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, horizontal * speed);
+    }
+
+    public void WallFall()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+    }
+
+    public void WallFallClimb()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.9f);
     }
 
     public void ResetJumpCount() 

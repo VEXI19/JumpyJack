@@ -12,32 +12,44 @@ public class InventoryManager : MonoBehaviour
     private bool _climbing = false;
     private bool _umbrella = false;
     private bool _hologram = false;
-
     private bool _hologramUsed = false;
-
     private GameObject holo;
 
-    public Vector3 posDoublejump = Vector3.zero;
-    public Vector3 posClimbing = Vector3.zero;
-    public Vector3 posUmbrella = Vector3.zero;
-    public Vector3 posHologram = Vector3.zero;
+    public void ActivateDoubleJump() { _doubleJump = true; }
 
-    public void ActivateDoubleJump(Vector3 pos) { _doubleJump = true; posDoublejump = pos; }
+    public void ActivateClimbing() { _climbing = true; }
 
-    public void ActivateClimbing(Vector3 pos) { _climbing = true; posClimbing = pos; }
+    public void ActivateUmbrella() { _umbrella = true; }
 
-    public void ActivateUmbrella(Vector3 pos) { _umbrella = true; posUmbrella = pos; }
+    public void ActivateHologram() { _hologram = true; }
 
-    public void ActivateHologram(Vector3 pos) { _hologram = true; posHologram = pos; }
+    public bool DoubleJump { get => _doubleJump; }
 
-    public bool DoubleJump { get => _doubleJump; set => _doubleJump = value; }
+    public bool Climbing { get => _climbing; }
 
-    public bool Climbing { get => _climbing; set => _climbing = value; }
+    public bool Umbrella { get => _umbrella; }
 
-    public bool Umbrella { get => _umbrella; set => _umbrella = value; }
+    public bool Hologram { get => _hologram; }
 
-    public bool Hologram { get => _hologram; set => _hologram = value; }
-    public bool HologramUsed { get => _hologramUsed; }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("DoubleJumpPowerUp"))
+        {
+            _doubleJump = true;
+        }
+        if (collision.gameObject.CompareTag("ClimbingPowerUp"))
+        {
+            _climbing = true;
+        }
+        if (collision.gameObject.CompareTag("UmbrellaPowerUp"))
+        {
+            _umbrella = true;
+        }
+        if (collision.gameObject.CompareTag("HologramPowerUp"))
+        {
+            _hologram = true;
+        }
+    }
 
     private void Update()
     {
@@ -79,6 +91,16 @@ public class InventoryManager : MonoBehaviour
             }
 
 
+        }
+
+        if (_hologramUsed)
+        {
+            float distance = Vector3.Distance(holo.transform.position, transform.position);
+            if (distance > 13f)
+            {
+                Destroy(holo);
+                _hologramUsed = false;
+            }
         }
 
        
