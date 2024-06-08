@@ -9,8 +9,8 @@ public class Collision : MonoBehaviour
     {
         if (target.gameObject.CompareTag("Player"))
         {
-            Instantiate(blinker, transform.position, transform.rotation);
             Destroy(this.gameObject);
+            Instantiate(blinker, transform.position, transform.rotation);
         }
     }
 }
