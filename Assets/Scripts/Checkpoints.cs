@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class Checkpoints : MonoBehaviour
 {
-    private Vector3 _savedCheckpoint;
+    [HideInInspector] public Vector3 savedCheckpoint;
+
+    private Rigidbody2D rb;
+    private InventoryManager savedInventory;
+    private InventoryManager inventory;
     // Start is called before the first frame update
     void Start()
     {
-        _savedCheckpoint = new Vector3(2.52f, -4.89f, 0f); // starting position
-        transform.position = _savedCheckpoint;
+        savedCheckpoint = new Vector3(2.52f, -4.89f, 0f); // starting position
+        transform.position = savedCheckpoint;
+        rb = GetComponent<Rigidbody2D>();
+        inventory = GetComponent<InventoryManager>();
+        inventory.Save();
     }
 
     // Update is called once per frame
@@ -18,13 +25,14 @@ public class Checkpoints : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            transform.position = _savedCheckpoint;
+            rb.velocity = new Vector2(0, 0);
+            transform.position = savedCheckpoint;
         }        
     }
 
     public void SaveNewCheckpoint(Vector3 newCheckpoint)
     {
-        _savedCheckpoint = new Vector3(newCheckpoint.x, newCheckpoint.y, newCheckpoint.z);
+        savedCheckpoint = new Vector3(newCheckpoint.x, newCheckpoint.y, newCheckpoint.z);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -34,6 +42,7 @@ public class Checkpoints : MonoBehaviour
             Vector3 newPosition = collision.gameObject.transform.position;
             newPosition.y++;
             SaveNewCheckpoint(newPosition);
+            inventory.Save();
         }
     }
 }

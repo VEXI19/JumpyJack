@@ -19,7 +19,7 @@ public class Tracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerinv.HologramUsed)
+        if (!playerinv.Hologram)
         {
             posx = this.gameObject.transform.position.x;
             posy = this.gameObject.transform.position.y;

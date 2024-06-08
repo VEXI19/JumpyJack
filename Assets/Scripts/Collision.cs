@@ -8,7 +8,7 @@ public class Collision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }

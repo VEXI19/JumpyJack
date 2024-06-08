@@ -6,60 +6,71 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+
 public class InventoryManager : MonoBehaviour
 {
-    private bool _doubleJump = false;
-    private bool _climbing = false;
-    private bool _umbrella = false;
-    private bool _hologram = false;
+    InventoryPowerUps powerUps;
+    InventoryPowerUps powerUpsSave;
     private bool _hologramUsed = false;
     private GameObject holo;
 
-    public void ActivateDoubleJump() { _doubleJump = true; }
+    struct InventoryPowerUps
+    {
+        public bool _doubleJump;
+        public bool _climbing;
+        public bool _umbrella;
+        public bool _hologram;
+    }
 
-    public void ActivateClimbing() { _climbing = true; }
+    private void Start()
+    {
+        powerUps._climbing = false;
+        powerUps._doubleJump = false;
+        powerUps._climbing = false;
+        powerUps._hologram = false;
+    }
 
-    public void ActivateUmbrella() { _umbrella = true; }
+    public void Save()
+    {
+        powerUpsSave = powerUps;
+    }
 
-    public void ActivateHologram() { _hologram = true; }
+    public void Restore()
+    {
+        powerUps = powerUpsSave;
+    }
 
-    public bool DoubleJump { get => _doubleJump; }
+    public bool DoubleJump { get => powerUps._doubleJump; }
 
-    public bool Climbing { get => _climbing; }
+    public bool Climbing { get => powerUps._climbing; }
 
-    public bool Umbrella { get => _umbrella; }
+    public bool Umbrella { get => powerUps._umbrella; }
 
-    public bool Hologram { get => _hologram; }
+    public bool Hologram { get => powerUps._hologram; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DoubleJumpPowerUp"))
         {
-            _doubleJump = true;
+            powerUps._doubleJump = true;
         }
         if (collision.gameObject.CompareTag("ClimbingPowerUp"))
         {
-            _climbing = true;
+            powerUps._climbing = true;
         }
         if (collision.gameObject.CompareTag("UmbrellaPowerUp"))
         {
-            _umbrella = true;
+            powerUps._umbrella = true;
         }
         if (collision.gameObject.CompareTag("HologramPowerUp"))
         {
-            _hologram = true;
+            powerUps._hologram = true;
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Debug.Log(!_hologram);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.G) && _hologram)
+        if (Input.GetKeyDown(KeyCode.G) && powerUps._hologram)
         {
             if (!_hologramUsed)
             {

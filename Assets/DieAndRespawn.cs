@@ -37,27 +37,24 @@ public class DieAndRespawn : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        transform.position = chk.SavedCheckpoint;
+        transform.position = chk.savedCheckpoint;
+        inventory.Restore();
 
-        if(inventory.DoubleJump != chk.savedDoublejump)
+        if (!inventory.DoubleJump)
         {
-            inventory.DoubleJump = chk.savedDoublejump;
-            Instantiate(doublejump, position: inventory.posDoublejump, this.transform.rotation);
+            doublejump.GetComponent<SpriteRenderer>().enabled = true;
         }
-        if (inventory.Climbing != chk.savedClimbing)
+        if (!inventory.Climbing)
         {
-            inventory.Climbing = chk.savedClimbing;
-            Instantiate(climbing, position: inventory.posClimbing, this.transform.rotation);
+            climbing.GetComponent<SpriteRenderer>().enabled = true;
         }
-        if (inventory.Umbrella != chk.savedUmbrella)
+        if (!inventory.Umbrella)
         {
-            inventory.Umbrella = chk.savedUmbrella;
-            Instantiate(umbrella, position: inventory.posUmbrella, this.transform.rotation);
+            umbrella.GetComponent<SpriteRenderer>().enabled = true;
         }
-        if (inventory.Hologram != chk.savedHologram)
+        if (!inventory.Hologram)
         {
-            inventory.Hologram = chk.savedHologram;
-            Instantiate(hologram, position: inventory.posHologram, this.transform.rotation);
+            hologram.GetComponent<SpriteRenderer>().enabled = true;
         }
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
