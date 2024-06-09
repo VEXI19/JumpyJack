@@ -19,7 +19,7 @@ public class trackingthingthing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tracker.distance(transform.position.x, transform.position.y) < 12f)
+        if (tracker.distance(transform.position.x, transform.position.y) < 9f)
         {
             var x = (tracker.posx - transform.position.x);
             var y = (tracker.posy - transform.position.y);

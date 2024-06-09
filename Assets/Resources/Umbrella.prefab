@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 637885030727396099}
   - component: {fileID: 9211527951909298849}
   - component: {fileID: 5614294812454748783}
-  - component: {fileID: 609263305336423866}
-  - component: {fileID: 860975997513501296}
-  m_Layer: 6
+  - component: {fileID: 6689147384670253681}
+  m_Layer: 0
   m_Name: Umbrella
   m_TagString: UmbrellaPowerUp
   m_Icon: {fileID: 0}
@@ -116,7 +115,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.12214446}
@@ -132,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.87656975, y: 0.7557111}
   m_EdgeRadius: 0
---- !u!114 &609263305336423866
+--- !u!114 &6689147384670253681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,28 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4714918051597398735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eae67ec455a462f4ebb738201391dee7, type: 3}
+  m_Script: {fileID: 11500000, guid: b6240cde76745314598ec25af2b9f1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blinker: {fileID: 7179661285622905342, guid: e842b1ee7b2226f48bdd48317c90dd51, type: 3}
---- !u!95 &860975997513501296
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4714918051597398735}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 09aebfb8b5e85204ca149ec03915cdb3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

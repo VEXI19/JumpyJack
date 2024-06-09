@@ -37,7 +37,7 @@ public class thingspawner : MonoBehaviour
                     Destroy(things[i]);
                 }
 
-                things[i] = Instantiate(thing, position: this.transform.position + new Vector3(0,0.5f,0), this.transform.rotation);
+                things[i] = Instantiate(thing, position: this.transform.position + new Vector3(0,0.5f,-0.1f), this.transform.rotation);
 
                 var x = Random.value * 4 - 2;
 

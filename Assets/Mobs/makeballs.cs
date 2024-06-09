@@ -22,7 +22,7 @@ public class makeballs : MonoBehaviour
 
             yield return new WaitForSeconds(1.65f);
 
-            GameObject bbll = Instantiate(ball, position: this.transform.position + new Vector3(0.5f*isright,0,0), this.transform.rotation);
+            GameObject bbll = Instantiate(ball, position: this.transform.position + new Vector3(0.5f*isright,0,-0.1f), this.transform.rotation);
 
             yield return new WaitForSeconds(0.15f);
 

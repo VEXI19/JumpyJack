@@ -57,6 +57,12 @@ public class DieAndRespawn : MonoBehaviour
             hologram.GetComponent<SpriteRenderer>().enabled = true;
         }
 
+        if (inventory._hologramUsed)
+        {
+            Destroy(inventory.holo);
+            inventory._hologramUsed = false;
+        }
+
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         animator.Play("idle");
     }

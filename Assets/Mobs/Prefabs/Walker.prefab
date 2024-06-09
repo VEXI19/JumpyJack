@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 713684846924668730}
   - component: {fileID: 7608781934714558259}
   - component: {fileID: 9071632367200589530}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Walker
   m_TagString: Toxic
   m_Icon: {fileID: 0}
