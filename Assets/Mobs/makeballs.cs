@@ -20,13 +20,13 @@ public class makeballs : MonoBehaviour
         {
             isrunning = false;
 
-            yield return new WaitForSeconds(1.65f);
+            yield return new WaitForSeconds(3.5f);
 
             GameObject bbll = Instantiate(ball, position: this.transform.position + new Vector3(0.5f*isright,0,-0.1f), this.transform.rotation);
+            bbll.GetComponent<balling>().isright = isright;
 
             yield return new WaitForSeconds(0.15f);
 
-            bbll.GetComponent<balling>().isright = isright;
         }
     }
 
