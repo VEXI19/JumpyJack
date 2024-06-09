@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2717780685014431614}
   - component: {fileID: 5244766799147178241}
-  - component: {fileID: 3908611355113563375}
   - component: {fileID: 2012561402607188355}
   - component: {fileID: 325332388046778678}
-  m_Layer: 6
+  - component: {fileID: 6810041362745444224}
+  m_Layer: 0
   m_Name: DoubleJump
   m_TagString: DoubleJumpPowerUp
   m_Icon: {fileID: 0}
@@ -87,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3908611355113563375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125898214783076581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eae67ec455a462f4ebb738201391dee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blinker: {fileID: 7179661285622905342, guid: e842b1ee7b2226f48bdd48317c90dd51, type: 3}
 --- !u!95 &2012561402607188355
 Animator:
   serializedVersion: 5
@@ -150,9 +137,22 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.1166766}
   serializedVersion: 2
   m_Radius: 0.3833234
+--- !u!114 &6810041362745444224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125898214783076581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6240cde76745314598ec25af2b9f1f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinker: {fileID: 7179661285622905342, guid: e842b1ee7b2226f48bdd48317c90dd51, type: 3}

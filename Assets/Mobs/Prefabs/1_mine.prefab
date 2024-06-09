@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1901587354826095376}
   - component: {fileID: 7311649758204441458}
   - component: {fileID: -6278962186611718751}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: 1_mine
   m_TagString: Toxic
   m_Icon: {fileID: 0}

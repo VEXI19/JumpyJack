@@ -11,8 +11,9 @@ public class InventoryManager : MonoBehaviour
 {
     InventoryPowerUps powerUps;
     InventoryPowerUps powerUpsSave;
-    private bool _hologramUsed = false;
-    private GameObject holo;
+    public bool _hologramUsed = false;
+    public GameObject holo;
+    public GameObject holoObject;
 
     struct InventoryPowerUps
     {
@@ -74,25 +75,8 @@ public class InventoryManager : MonoBehaviour
         {
             if (!_hologramUsed)
             {
-                holo = Instantiate(this.gameObject, position: this.transform.position, this.transform.rotation);
+                holo = Instantiate(holoObject, position: this.transform.position + new Vector3(0, 0, 0.5f), this.transform.rotation);
                 _hologramUsed = true;
-                
-                MonoBehaviour[] scripts = holo.GetComponents<MonoBehaviour>();
-                foreach (MonoBehaviour script in scripts)
-                {
-                    script.enabled = false;
-                }
-
-                BoxCollider2D[] boxColliders = holo.GetComponents<BoxCollider2D>();
-                foreach (BoxCollider2D bc in boxColliders)
-                {
-                    bc.excludeLayers = LayerMask.GetMask("Default");
-                }
-
-                for (var i = holo.transform.childCount - 1; i >= 0; i--)
-                {
-                    Object.Destroy(holo.transform.GetChild(i).gameObject);
-                }
             }
 
             else
@@ -107,7 +91,7 @@ public class InventoryManager : MonoBehaviour
         if (_hologramUsed)
         {
             float distance = Vector3.Distance(holo.transform.position, transform.position);
-            if (distance > 13f)
+            if (distance > 10f)
             {
                 Destroy(holo);
                 _hologramUsed = false;

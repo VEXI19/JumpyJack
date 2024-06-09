@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4657720106403889150}
   - component: {fileID: 2657090920510126935}
   - component: {fileID: 1750375865434899307}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MineLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}

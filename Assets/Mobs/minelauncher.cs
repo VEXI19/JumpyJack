@@ -36,7 +36,7 @@ public class minelauncher : MonoBehaviour
                     Destroy(mines[i]);
                 }
 
-                mines[i] = Instantiate(mine, position: this.transform.position, this.transform.rotation);
+                mines[i] = Instantiate(mine, position: this.transform.position + new Vector3(0, 0, 0.1f), this.transform.rotation);
 
                 var x = Random.value * 8 - 4;
                 var y = Random.value * 6 + 6;

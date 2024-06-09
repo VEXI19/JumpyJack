@@ -27,6 +27,12 @@ public class Checkpoints : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
             transform.position = savedCheckpoint;
+
+            if (inventory._hologramUsed)
+            {
+                Destroy(inventory.holo);
+                inventory._hologramUsed = false;
+            }
         }        
     }
 
@@ -43,6 +49,13 @@ public class Checkpoints : MonoBehaviour
             newPosition.y++;
             SaveNewCheckpoint(newPosition);
             inventory.Save();
+
+            collision.gameObject.GetComponent<Animator>().Play("checkpoint_active");
+            foreach (var chk in GameObject.FindGameObjectsWithTag("Checkpoint"))
+            {
+                if (collision.gameObject.GetInstanceID() == chk.GetInstanceID()) continue;
+                chk.GetComponent<Animator>().Play("checkpoint");
+            }
         }
     }
 }
