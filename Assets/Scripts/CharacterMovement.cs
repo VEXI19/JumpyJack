@@ -10,6 +10,8 @@ public class CharacterMovement : MonoBehaviour
     public float climbSpeed = 5f;
     public float wallFallSpeed = 3.0f;
     public float fallSpeed = 10f;
+    
+    private bool isFacingRight = true;
 
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Collider2D coll;
@@ -49,6 +51,7 @@ public class CharacterMovement : MonoBehaviour
         stateMachine.CurrentState.HandleInput();
         stateMachine.CurrentState.LogicUpdate();
         maxJumpCount = inventory.DoubleJump ? (uint)2 : (uint)1;
+        Flip();
     }
 
     void FixedUpdate()
@@ -61,6 +64,18 @@ public class CharacterMovement : MonoBehaviour
         if (inventory.Umbrella && rb.velocity.y < 0 && Input.GetKey(KeyCode.Space))
         {
             rb.velocity = new Vector2(rb.velocity.x, -2f);
+        }
+    }
+
+    void Flip()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector2 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
         }
     }
 
