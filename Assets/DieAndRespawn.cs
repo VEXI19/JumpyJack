@@ -32,6 +32,17 @@ public class DieAndRespawn : MonoBehaviour
             StartCoroutine(waiter());
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Toxic"))
+        {
+            animator.Play("death");
+            rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+
+            StartCoroutine(waiter());
+        }
+
+    }
 
     IEnumerator waiter()
     {
