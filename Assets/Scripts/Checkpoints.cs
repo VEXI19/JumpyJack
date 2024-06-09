@@ -6,14 +6,16 @@ using UnityEngine;
 public class Checkpoints : MonoBehaviour
 {
     [HideInInspector] public Vector3 savedCheckpoint;
+    public GameObject startingCheckpoint;
 
     private Rigidbody2D rb;
-    private InventoryManager savedInventory;
     private InventoryManager inventory;
     // Start is called before the first frame update
     void Start()
     {
-        savedCheckpoint = new Vector3(2.52f, -4.89f, 0f); // starting position
+        Vector3 startingPosition = startingCheckpoint.transform.position;
+        SaveNewCheckpoint(startingPosition);
+        startingCheckpoint.GetComponent<Animator>().Play("checkpoint_active");
         transform.position = savedCheckpoint;
         rb = GetComponent<Rigidbody2D>();
         inventory = GetComponent<InventoryManager>();
