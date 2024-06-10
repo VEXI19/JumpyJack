@@ -12,6 +12,9 @@ public class ClimbingState : State
         {
             stateMachine.ChangeState(character.idleState);
         }
+
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<DieAndRespawn>().Locked)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().Play("climb");
     }
 
     public override void HandleInput()

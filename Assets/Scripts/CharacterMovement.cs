@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     
     private bool isFacingRight = true;
 
+    [HideInInspector] private DieAndRespawn dnr;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Collider2D coll;
     [HideInInspector] public InventoryManager inventory;
@@ -29,8 +30,11 @@ public class CharacterMovement : MonoBehaviour
     public FallingState fallingState;
     public ClimbingState climbingState;
 
+    public bool IsFacingRight { get => isFacingRight; }
+
     void Start()
     {
+        dnr = GetComponent<DieAndRespawn>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         inventory = GetComponent<InventoryManager>();
@@ -51,7 +55,9 @@ public class CharacterMovement : MonoBehaviour
         stateMachine.CurrentState.HandleInput();
         stateMachine.CurrentState.LogicUpdate();
         maxJumpCount = inventory.DoubleJump ? (uint)2 : (uint)1;
-        Flip();
+
+        if (!dnr.Locked)
+            Flip();
     }
 
     void FixedUpdate()

@@ -71,4 +71,17 @@ public class userinterface : MonoBehaviour
 
         button.GetComponentInChildren<TextMeshProUGUI>().text = Enum.GetName(typeof(KeyCode), PlayerPrefs.GetInt(button.name, Convert.ToInt32(button.name.Substring(button.name.Length - 3))));
     }
+
+    public void setvolume(Slider slider)
+    {
+        if (slider.name == "musicslider")
+        {
+            GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().volume = slider.value;
+            PlayerPrefs.SetInt("volume", Convert.ToInt32(slider.value * 1000));
+        }
+        else
+        {
+            PlayerPrefs.SetInt("effects", Convert.ToInt32(slider.value * 1000));
+        }
+    }
 }

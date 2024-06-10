@@ -11,6 +11,8 @@ public class finish : MonoBehaviour
     {
         if (target.gameObject.CompareTag("Player"))
         {
+            GameObject.Find("finishsfx").GetComponent<AudioSource>().Play();
+
             Time.timeScale = 0;
             panel.gameObject.SetActive(true);
             

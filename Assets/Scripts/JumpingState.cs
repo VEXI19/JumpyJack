@@ -6,6 +6,9 @@ public class JumpingState : State
 
     public override void Enter()
     {
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<DieAndRespawn>().Locked)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().Play("jump_up");
+
         if (character.isTouchingWall && ((InputManager.Instance.GetAxisRaw("Horizontal") < 0 && character.isWallRight) || (InputManager.Instance.GetAxisRaw("Horizontal") > 0 && !character.isWallRight)))
         {
             character.rb.velocity = new Vector2(InputManager.Instance.GetAxisRaw("Horizontal") * character.moveSpeed, character.jumpForce);
