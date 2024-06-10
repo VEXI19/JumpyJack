@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using System;
+using TMPro;
 
 public class userinterface : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class userinterface : MonoBehaviour
 
     public void Update()
     {
-        if (panel != null && Input.GetKey(KeyCode.P))
+        if (panel != null && Input.GetKey(InputManager.Instance.pause))
         {
             this.pause();
             panel.gameObject.SetActive(true);
@@ -39,7 +39,36 @@ public class userinterface : MonoBehaviour
 
     public void resetprogress()
     {
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey("progressmanager");
         GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<progressmanager>().Start();
+    }
+
+    public void assignkey(Button button)
+    {
+        button.GetComponentInChildren<TextMeshProUGUI>().text = "";
+
+        StartCoroutine(waitForKeyPress(button));
+    }
+
+    private IEnumerator waitForKeyPress(Button button)
+    {
+        while (!Input.anyKey)
+        {
+            yield return null;
+        }
+
+        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKey(kcode))
+            {
+                if (kcode == KeyCode.Escape) break;
+
+                PlayerPrefs.SetInt(button.name, (int)kcode);
+                InputManager.Instance.assign(button.name, kcode);
+                break;
+            }
+        }
+
+        button.GetComponentInChildren<TextMeshProUGUI>().text = Enum.GetName(typeof(KeyCode), PlayerPrefs.GetInt(button.name, Convert.ToInt32(button.name.Substring(button.name.Length - 3))));
     }
 }

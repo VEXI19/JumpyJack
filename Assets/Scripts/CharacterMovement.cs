@@ -57,11 +57,11 @@ public class CharacterMovement : MonoBehaviour
     void FixedUpdate()
     {
         stateMachine.CurrentState.PhysicsUpdate();
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(InputManager.Instance.jump))
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
-        if (inventory.Umbrella && rb.velocity.y < 0 && Input.GetKey(KeyCode.Space))
+        if (inventory.Umbrella && rb.velocity.y < 0 && Input.GetKey(InputManager.Instance.jump))
         {
             rb.velocity = new Vector2(rb.velocity.x, -2f);
         }

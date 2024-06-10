@@ -12,11 +12,11 @@ public class FallingState : State
         {
             stateMachine.ChangeState(character.idleState);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(InputManager.Instance.jump))
         {
             stateMachine.ChangeState(character.jumpingState);
         }
-        if (Input.GetAxisRaw("Horizontal") != 0 )
+        if (InputManager.Instance.GetAxisRaw("Horizontal") != 0 )
         {
             if (character.isTouchingWall)
             {
@@ -34,7 +34,7 @@ public class FallingState : State
     public override void PhysicsUpdate() {
         if (character.inventory.Climbing && character.isTouchingWall)
         {
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(InputManager.Instance.down))
             {
                 character.rb.velocity = new Vector2(character.rb.velocity.x, -character.fallSpeed);
             } else

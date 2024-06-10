@@ -9,15 +9,15 @@ public class IdleState : State
 
     public override void HandleInput()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(InputManager.Instance.jump))
         {
             stateMachine.ChangeState(character.jumpingState);
         }
-        else if (character.isTouchingWall && ((Input.GetAxis("Horizontal") < 0 && !character.isWallRight) || (Input.GetAxis("Horizontal") > 0 && character.isWallRight)))
+        else if (character.isTouchingWall && ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && character.isWallRight)))
         {
             stateMachine.ChangeState(character.climbingState);
         }
-        else if (Input.GetAxis("Horizontal") != 0)
+        else if (InputManager.Instance.GetAxis("Horizontal") != 0)
         {
             stateMachine.ChangeState(character.movingState);
         }
