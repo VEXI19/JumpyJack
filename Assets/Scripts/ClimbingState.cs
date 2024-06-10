@@ -16,18 +16,18 @@ public class ClimbingState : State
 
     public override void HandleInput()
     {
-        if (Input.GetAxisRaw("Horizontal") == 0)
+        if (InputManager.Instance.GetAxisRaw("Horizontal") == 0)
         {
             stateMachine.ChangeState(character.fallingState);
         }
-        else if (Input.GetButtonDown("Jump"))
+        else if (Input.GetKeyDown(InputManager.Instance.jump))
         {
             stateMachine.ChangeState(character.jumpingState);
         }
         else if (!character.isTouchingWall)
         {
             stateMachine.ChangeState(character.idleState);
-        } else if (character.isTouchingWall && ((Input.GetAxis("Horizontal") < 0 && character.isWallRight) || (Input.GetAxis("Horizontal") > 0 && !character.isWallRight)))
+        } else if (character.isTouchingWall && ((InputManager.Instance.GetAxis("Horizontal") < 0 && character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && !character.isWallRight)))
         {
             stateMachine.ChangeState(character.movingState);
         }
@@ -38,7 +38,7 @@ public class ClimbingState : State
 
     public override void PhysicsUpdate()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = InputManager.Instance.GetAxis("Horizontal");
         if (character.rb.velocity.y <= character.climbSpeed)
         {
             if(character.isWallRight)

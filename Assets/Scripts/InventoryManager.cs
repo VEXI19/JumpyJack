@@ -71,7 +71,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && powerUps._hologram)
+        if (Input.GetKeyDown(InputManager.Instance.hologram) && powerUps._hologram)
         {
             if (!_hologramUsed)
             {
