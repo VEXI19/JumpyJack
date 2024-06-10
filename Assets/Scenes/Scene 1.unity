@@ -6374,6 +6374,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4c00fd89b919b4d93e4e2110244ad3, type: 3}
+--- !u!1 &2093962061686769430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3938647848505699875, guid: ce4c00fd89b919b4d93e4e2110244ad3, type: 3}
+  m_PrefabInstance: {fileID: 2093962061686769429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3082341147528120159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6882,6 +6887,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1993533756439417472, guid: 8464b350f6fac97418d8c0ea6b494ef5, type: 3}
+      propertyPath: startingCheckpoint
+      value: 
+      objectReference: {fileID: 2093962061686769430}
     - target: {fileID: 4009512490506987355, guid: 8464b350f6fac97418d8c0ea6b494ef5, type: 3}
       propertyPath: climbing
       value: 
