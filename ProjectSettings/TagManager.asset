@@ -12,6 +12,7 @@ TagManager:
   - Checkpoint
   - Toxic
   - ProgressManager
+  - Music
   layers:
   - Default
   - TransparentFX

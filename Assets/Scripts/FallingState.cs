@@ -4,7 +4,11 @@ public class FallingState : State
 {
     public FallingState(CharacterMovement character, StateMachine stateMachine) : base(character, stateMachine) { }
 
-    public override void Enter() { }
+    public override void Enter()
+    {
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<DieAndRespawn>().Locked)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().Play("jump_down");
+    }
 
     public override void HandleInput()
     {

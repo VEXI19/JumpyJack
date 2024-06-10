@@ -27,6 +27,8 @@ public class Checkpoints : MonoBehaviour
     {
         if (Input.GetKeyDown(InputManager.Instance.teleportToCheckpoint))
         {
+            GameObject.Find("checkpointsfx").GetComponent<AudioSource>().Play();
+
             rb.velocity = new Vector2(0, 0);
             transform.position = savedCheckpoint;
 
@@ -47,6 +49,9 @@ public class Checkpoints : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Checkpoint") && Input.GetKey(InputManager.Instance.saveCheckpoint))
         {
+            if (!GameObject.Find("checkpointsfx").GetComponent<AudioSource>().isPlaying)
+                GameObject.Find("checkpointsfx").GetComponent<AudioSource>().Play();
+
             Vector3 newPosition = collision.gameObject.transform.position;
             newPosition.y++;
             SaveNewCheckpoint(newPosition);

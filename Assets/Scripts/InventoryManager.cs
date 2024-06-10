@@ -73,9 +73,17 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(InputManager.Instance.hologram) && powerUps._hologram)
         {
+            GameObject.Find("hologramsfx").GetComponent<AudioSource>().Play();
+
             if (!_hologramUsed)
             {
                 holo = Instantiate(holoObject, position: this.transform.position + new Vector3(0, 0, 0.5f), this.transform.rotation);
+                if (!GetComponent<CharacterMovement>().IsFacingRight)
+                {
+                    Vector2 localScale = holo.transform.localScale;
+                    localScale.x *= -1f;
+                    holo.transform.localScale = localScale;
+                }
                 _hologramUsed = true;
             }
 
@@ -93,6 +101,7 @@ public class InventoryManager : MonoBehaviour
             float distance = Vector3.Distance(holo.transform.position, transform.position);
             if (distance > 10f)
             {
+                GameObject.Find("hologramsfx").GetComponent<AudioSource>().Play();
                 Destroy(holo);
                 _hologramUsed = false;
             }
