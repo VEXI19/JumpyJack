@@ -9,6 +9,9 @@ public class DieAndRespawn : MonoBehaviour
     public GameObject umbrella;
     public GameObject hologram;
 
+    private bool locked = false;
+    public bool Locked { get => locked; }
+
     private Animator animator;
     private Rigidbody2D rb;
     private Checkpoints chk;
@@ -24,8 +27,10 @@ public class DieAndRespawn : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Toxic"))
+        if (collision.gameObject.CompareTag("Toxic") && !locked)
         {
+            locked = true;
+            GameObject.Find("deathsfx").GetComponent<AudioSource>().Play();
             animator.Play("death");
             rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
@@ -34,11 +39,13 @@ public class DieAndRespawn : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Toxic"))
+        if (collision.gameObject.CompareTag("Toxic") && !locked)
         {
+            locked = true;
+            GameObject.Find("deathsfx").GetComponent<AudioSource>().Play();
             animator.Play("death");
             rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-
+            
             StartCoroutine(waiter());
         }
 
@@ -76,5 +83,6 @@ public class DieAndRespawn : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         animator.Play("idle");
+        locked = false;
     }
 }

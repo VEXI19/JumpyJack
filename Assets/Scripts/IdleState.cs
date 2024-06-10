@@ -5,19 +5,23 @@ public class IdleState : State
 {
     public IdleState(CharacterMovement character, StateMachine stateMachine) : base(character, stateMachine) { }
 
-    public override void Enter() { }
+    public override void Enter()
+    {
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<DieAndRespawn>().Locked)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().Play("idle");
+    }
 
     public override void HandleInput()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(InputManager.Instance.jump))
         {
             stateMachine.ChangeState(character.jumpingState);
         }
-        else if (character.isTouchingWall && ((Input.GetAxis("Horizontal") < 0 && !character.isWallRight) || (Input.GetAxis("Horizontal") > 0 && character.isWallRight)))
+        else if (character.isTouchingWall && ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && character.isWallRight)))
         {
             stateMachine.ChangeState(character.climbingState);
         }
-        else if (Input.GetAxis("Horizontal") != 0)
+        else if (InputManager.Instance.GetAxis("Horizontal") != 0)
         {
             stateMachine.ChangeState(character.movingState);
         }

@@ -25,8 +25,10 @@ public class Checkpoints : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(InputManager.Instance.teleportToCheckpoint))
         {
+            GameObject.Find("checkpointsfx").GetComponent<AudioSource>().Play();
+
             rb.velocity = new Vector2(0, 0);
             transform.position = savedCheckpoint;
 
@@ -45,8 +47,11 @@ public class Checkpoints : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Checkpoint") && Input.GetKey(KeyCode.S))
+        if (collision.gameObject.CompareTag("Checkpoint") && Input.GetKey(InputManager.Instance.saveCheckpoint))
         {
+            if (!GameObject.Find("checkpointsfx").GetComponent<AudioSource>().isPlaying)
+                GameObject.Find("checkpointsfx").GetComponent<AudioSource>().Play();
+
             Vector3 newPosition = collision.gameObject.transform.position;
             newPosition.y++;
             SaveNewCheckpoint(newPosition);
