@@ -7914,6 +7914,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3568302484280288523, guid: 8464b350f6fac97418d8c0ea6b494ef5, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: fe6082be15d171b49a848bd6456fa4e4, type: 2}
     - target: {fileID: 4009512490506987355, guid: 8464b350f6fac97418d8c0ea6b494ef5, type: 3}
       propertyPath: climbing
       value: 
