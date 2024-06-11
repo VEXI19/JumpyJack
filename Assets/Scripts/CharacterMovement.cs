@@ -10,7 +10,16 @@ public class CharacterMovement : MonoBehaviour
     public float climbSpeed = 5f;
     public float wallFallSpeed = 3.0f;
     public float fallSpeed = 10f;
-    
+
+    public LayerMask groundLayer;
+    private float rayLength = 0.1f;
+    public Transform groundCheckRight, groundCheckLeft, shoulderCheckLeft, shoulderCheckRight;
+    private Vector2[] wallChecksRight = new Vector2[11];
+    private Vector2[] wallChecksLeft = new Vector2[11];
+
+    [HideInInspector] public bool isTouchingWallLeft;
+    [HideInInspector] public bool isTouchingWallRight;
+
     private bool isFacingRight = true;
 
     [HideInInspector] private DieAndRespawn dnr;
@@ -22,6 +31,8 @@ public class CharacterMovement : MonoBehaviour
     [HideInInspector] public uint jumpCount = 0;
     [HideInInspector] public uint maxJumpCount = 1;
     [HideInInspector] public bool isWallRight = false;
+    [HideInInspector] public float groundCheckCooldown = 0.1f;
+    [HideInInspector] public float groundCheckTimer;
 
     public StateMachine stateMachine;
     public IdleState idleState;
@@ -29,6 +40,8 @@ public class CharacterMovement : MonoBehaviour
     public JumpingState jumpingState;
     public FallingState fallingState;
     public ClimbingState climbingState;
+
+    
 
     public bool IsFacingRight { get => isFacingRight; }
 
@@ -55,14 +68,38 @@ public class CharacterMovement : MonoBehaviour
         stateMachine.CurrentState.HandleInput();
         stateMachine.CurrentState.LogicUpdate();
         maxJumpCount = inventory.DoubleJump ? (uint)2 : (uint)1;
-
         if (!dnr.Locked)
             Flip();
+
+        for (var i = 0; i < wallChecksRight.Length; i++)
+        {
+            if (IsFacingRight)
+            {
+                wallChecksRight[i] = new Vector2(transform.position.x + 0.374f, transform.position.y + (i / 10f - 0.5f));
+            } else
+            {
+                wallChecksRight[i] = new Vector2(transform.position.x + 0.435f, transform.position.y + (i / 10f - 0.5f));
+            }
+        }
+
+        for (var i = 0; i < wallChecksLeft.Length; i++)
+        {
+            if (IsFacingRight)
+            {
+                wallChecksLeft[i] = new Vector2(transform.position.x - 0.435f, transform.position.y - (i / 10f - 0.5f));
+            } else
+            {
+                wallChecksLeft[i] = new Vector2(transform.position.x - 0.374f, transform.position.y - (i / 10f - 0.5f));
+            }
+        }
     }
 
     void FixedUpdate()
     {
+        CheckSurroundings();
+
         stateMachine.CurrentState.PhysicsUpdate();
+
         if (Input.GetKeyUp(InputManager.Instance.jump))
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
@@ -85,54 +122,117 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            if (transform.position.y > collision.transform.position.y)
-            {
-                isGrounded = true;
-                this.jumpCount = 0;
-            }
-        }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        void CheckSurroundings()
         {
-            if (transform.position.x > collision.transform.position.x)
+            // Check if grounded on left or right
+            bool isGroundedLeft = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, rayLength, groundLayer);
+            bool isGroundedRight = Physics2D.Raycast(groundCheckRight.position, Vector2.down, rayLength, groundLayer);
+
+            // Check if touching shoulder on left or right
+            bool isTouchingShoulderLeft = Physics2D.Raycast(shoulderCheckLeft.position, isFacingRight ? Vector2.left : Vector2.right, rayLength, groundLayer);
+            bool isTouchingShoulderRight = Physics2D.Raycast(shoulderCheckRight.position, isFacingRight ? Vector2.right : Vector2.left, rayLength, groundLayer);
+
+        bool isTouchingWallLeftTemp = false;
+            bool isTouchingWallRightTemp = false;
+
+            // Check if touching wall on right
+            for (int i = 0; i < wallChecksRight.Length; i++)
             {
-                isWallRight = false;
+                bool rayCast = Physics2D.Raycast(wallChecksRight[i], Vector2.right, rayLength, groundLayer);
+                isTouchingWallRightTemp = isTouchingWallRightTemp || rayCast;
+            }
+
+            // Check if touching wall on left
+            foreach (Vector2 wallCheck in wallChecksLeft)
+            {
+                bool rayCast = Physics2D.Raycast(wallCheck, Vector2.left, rayLength, groundLayer);
+                isTouchingWallLeftTemp = isTouchingWallLeftTemp || rayCast;
+            }
+            bool isShoulderTouching;
+            // Update grounded and shoulder touching states based on timer
+            if (groundCheckTimer <= 0)
+            {
+                isGrounded = isGroundedLeft || isGroundedRight;
+                isShoulderTouching = isTouchingShoulderRight || isTouchingShoulderLeft;
             }
             else
             {
-                isWallRight = true;
+                isGrounded = false;
+                isShoulderTouching = false;
+                groundCheckTimer -= Time.deltaTime;
             }
-            isTouchingWall = true;
-        }
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
-        {
-            if (inventory.Climbing)
+            // Update wall touching states
+            isTouchingWallLeft = isTouchingWallLeftTemp;
+            isTouchingWallRight = isTouchingWallRightTemp;
+            isTouchingWall = isTouchingWallLeft || isTouchingWallRight;
+            isWallRight = isTouchingWallRight;
+
+            // Reset jump count if grounded or touching wall
+            if (isGrounded)
             {
-                jumpCount = 0;
+                this.jumpCount = 0;
             }
-        }
 
+            if (isTouchingWall && inventory.Climbing)
+            {
+                this.jumpCount = 0;
+            }
 
+            if (isShoulderTouching)
+            {
+                this.jumpCount = 0;
+            }
+
+        Debug.Log($"Grounded Left: {isGroundedLeft}, Grounded Right: {isGroundedRight}");
+        Debug.Log($"Touching Shoulder Left: {isTouchingShoulderLeft}, Touching Shoulder Right: {isTouchingShoulderRight}");
+        Debug.Log($"Touching Wall Left: {isTouchingWallLeftTemp}, Touching Wall Right: {isTouchingWallRightTemp}");
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+
+    private void OnDrawGizmosSelected()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        //Gizmos.color = Color.red;
+
+        //foreach (Vector2 wallCheck in wallChecksRight)
+        //{
+        //    Gizmos.DrawLine(wallCheck, wallCheck + Vector2.right * rayLength);
+        //}
+        
+        //foreach (Vector2 wallCheck in wallChecksLeft)
+        //{
+        //    Gizmos.DrawLine(wallCheck, wallCheck + Vector2.left * rayLength);
+        //}
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(groundCheckLeft.position, groundCheckLeft.position + Vector3.down * rayLength);
+        Gizmos.DrawLine(groundCheckRight.position, groundCheckRight.position + Vector3.down * rayLength);
+
+        Gizmos.DrawLine(shoulderCheckLeft.position, shoulderCheckLeft.position + (isFacingRight ? Vector3.left : Vector3.right) * rayLength);
+        Gizmos.DrawLine(shoulderCheckRight.position, shoulderCheckRight.position + (isFacingRight ? Vector3.right : Vector3.left) * rayLength);
+
+        foreach (Vector2 wallCheck in wallChecksRight)
         {
-            isGrounded = false;
+            Gizmos.DrawLine(wallCheck, wallCheck + Vector2.right * rayLength);
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        foreach (Vector2 wallCheck in wallChecksLeft)
         {
-            isTouchingWall = false;
+            Gizmos.DrawLine(wallCheck, wallCheck + Vector2.left * rayLength);
         }
+
+
+        //Gizmos.DrawLine(groundCheckLeft.position, groundCheckLeft.position + Vector3.down * rayLength);
+        //Gizmos.DrawLine(groundCheckRight.position, groundCheckRight.position + Vector3.down * rayLength);
+        //Gizmos.DrawLine(wallCheckLeftUp.position, wallCheckLeftUp.position + (isFacingRight ? Vector3.left : Vector3.right)  * rayLength);
+        //Gizmos.DrawLine(wallCheckLeftDown.position, wallCheckLeftDown.position + (isFacingRight ? Vector3.left : Vector3.right) * rayLength);
+        //Gizmos.DrawLine(wallCheckRightUp.position, wallCheckRightUp.position + (isFacingRight ? Vector3.right : Vector3.left) * rayLength);
+        //Gizmos.DrawLine(wallCheckRightDown.position, wallCheckRightDown.position + (isFacingRight ? Vector3.right : Vector3.left) * rayLength);
+        //Gizmos.DrawLine(shoulderCheckLeft.position, shoulderCheckLeft.position + (isFacingRight ? Vector3.left : Vector3.right) * rayLength);
+        //Gizmos.DrawLine(shoulderCheckRight.position, shoulderCheckRight.position + (isFacingRight ? Vector3.right : Vector3.left) * rayLength);
+
+        //Gizmos.DrawLine(wallCheckLeft.position, wallCheckLeft.position + Vector3.left * rayLength);
+        // Gizmos.DrawLine(wallCheckRight.position, wallCheckRight.position + Vector3.right * rayLength);
     }
 }
