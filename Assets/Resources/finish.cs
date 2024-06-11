@@ -5,16 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class finish : MonoBehaviour
 {
-    public GameObject panel;
-
+    public AudioSource finishsfx;
+    public GameObject finishpanel;
     private void OnCollisionEnter2D(Collision2D target)
     {
         if (target.gameObject.CompareTag("Player"))
         {
-            GameObject.Find("finishsfx").GetComponent<AudioSource>().Play();
+            finishsfx.GetComponent<AudioSource>().Play();
 
             Time.timeScale = 0;
-            panel.gameObject.SetActive(true);
+            finishpanel.SetActive(true);
             
             if(SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("progressmanager", 1) && SceneManager.GetActiveScene().buildIndex < 3)
             {

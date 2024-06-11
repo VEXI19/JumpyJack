@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public bool _hologramUsed = false;
     public GameObject holo;
     public GameObject holoObject;
+    public AudioSource hologramsfx;
 
     struct InventoryPowerUps
     {
@@ -73,7 +74,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(InputManager.Instance.hologram) && powerUps._hologram)
         {
-            GameObject.Find("hologramsfx").GetComponent<AudioSource>().Play();
+            hologramsfx.GetComponent<AudioSource>().Play();
 
             if (!_hologramUsed)
             {
@@ -101,7 +102,7 @@ public class InventoryManager : MonoBehaviour
             float distance = Vector3.Distance(holo.transform.position, transform.position);
             if (distance > 10f)
             {
-                GameObject.Find("hologramsfx").GetComponent<AudioSource>().Play();
+                hologramsfx.GetComponent<AudioSource>().Play();
                 Destroy(holo);
                 _hologramUsed = false;
             }

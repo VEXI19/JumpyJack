@@ -7,7 +7,7 @@ using TMPro;
 
 public class userinterface : MonoBehaviour
 {
-    public GameObject panel;
+    public GameObject pausepanel;
     public void exit()
     {
         Application.Quit();
@@ -30,10 +30,10 @@ public class userinterface : MonoBehaviour
 
     public void Update()
     {
-        if (panel != null && Input.GetKey(InputManager.Instance.pause))
+        if (pausepanel != null && Input.GetKey(InputManager.Instance.pause))
         {
             this.pause();
-            panel.gameObject.SetActive(true);
+            pausepanel.SetActive(true);
         }
     }
 

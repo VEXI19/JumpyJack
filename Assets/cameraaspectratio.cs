@@ -12,18 +12,7 @@ public class cameraaspectratio : MonoBehaviour
         float windowaspect = (float)Screen.width / (float)Screen.height;
         float scaleheight = windowaspect / targetaspect;
 
-        if (scaleheight < 1.0f)
-        {
-            Rect rect = cam.rect;
-
-            rect.width = 1.0f;
-            rect.height = scaleheight;
-            rect.x = 0;
-            rect.y = (1.0f - scaleheight) / 2.0f;
-
-            cam.rect = rect;
-        }
-        else
+        if (scaleheight > 1.0f)
         {
             float scalewidth = 1.0f / scaleheight;
 
@@ -44,18 +33,7 @@ public class cameraaspectratio : MonoBehaviour
         float windowaspect = (float)Screen.width / (float)Screen.height;
         float scaleheight = windowaspect / targetaspect;
 
-        if (scaleheight < 1.0f)
-        {
-            Rect rect = cam.rect;
-
-            rect.width = 1.0f;
-            rect.height = scaleheight;
-            rect.x = 0;
-            rect.y = (1.0f - scaleheight) / 2.0f;
-
-            cam.rect = rect;
-        }
-        else
+        if (scaleheight > 1.0f)
         {
             float scalewidth = 1.0f / scaleheight;
 
