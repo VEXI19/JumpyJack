@@ -8,6 +8,7 @@ public class DieAndRespawn : MonoBehaviour
     public GameObject climbing;
     public GameObject umbrella;
     public GameObject hologram;
+    public AudioSource deathsfx;
 
     private bool locked = false;
     public bool Locked { get => locked; }
@@ -30,7 +31,7 @@ public class DieAndRespawn : MonoBehaviour
         if (collision.gameObject.CompareTag("Toxic") && !locked)
         {
             locked = true;
-            GameObject.Find("deathsfx").GetComponent<AudioSource>().Play();
+            deathsfx.GetComponent<AudioSource>().Play();
             animator.Play("death");
             rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
@@ -42,7 +43,7 @@ public class DieAndRespawn : MonoBehaviour
         if (collision.gameObject.CompareTag("Toxic") && !locked)
         {
             locked = true;
-            GameObject.Find("deathsfx").GetComponent<AudioSource>().Play();
+            deathsfx.GetComponent<AudioSource>().Play();
             animator.Play("death");
             rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
             
