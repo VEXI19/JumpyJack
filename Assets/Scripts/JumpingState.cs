@@ -14,11 +14,12 @@ public class JumpingState : State
             character.rb.velocity = new Vector2(InputManager.Instance.GetAxisRaw("Horizontal") * character.moveSpeed, character.jumpForce);
 
             character.jumpCount++;
-        } else if (character.jumpCount < character.maxJumpCount)
+        } else if (character.jumpCount < character.maxJumpCount && character.groundCheckTimer <= 0)
         {
             character.rb.velocity = new Vector2(character.rb.velocity.x, character.jumpForce);
 
             character.jumpCount++;
+            character.groundCheckTimer = character.groundCheckCooldown;
         }
         stateMachine.ChangeState(character.idleState);
     }
@@ -27,7 +28,8 @@ public class JumpingState : State
 
     public override void LogicUpdate() { }
 
-    public override void PhysicsUpdate() { }
+    public override void PhysicsUpdate() {
+    }
 
     public override void Exit() { }
 }

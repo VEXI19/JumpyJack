@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class WallGroundColliders : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class WallGroundColliders : MonoBehaviour
         }
 
         wallRight.transform.parent = this.transform;
-        wallRight.GetComponent<BoxCollider2D>().isTrigger = true;
+        wallRight.GetComponent<TilemapCollider2D>().isTrigger = true;
     }
 
     void Start()

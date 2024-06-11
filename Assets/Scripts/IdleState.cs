@@ -17,11 +17,11 @@ public class IdleState : State
         {
             stateMachine.ChangeState(character.jumpingState);
         }
-        else if (character.isTouchingWall && ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && character.isWallRight)))
+        else if (character.isTouchingWall && character.inventory.Climbing && ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && character.isWallRight)))
         {
             stateMachine.ChangeState(character.climbingState);
         }
-        else if (InputManager.Instance.GetAxis("Horizontal") != 0)
+        else if ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isTouchingWallLeft) || (InputManager.Instance.GetAxis("Horizontal") > 0 && !character.isTouchingWallRight))
         {
             stateMachine.ChangeState(character.movingState);
         }
