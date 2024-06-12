@@ -5,6 +5,7 @@ using UnityEngine;
 public class minelauncher : MonoBehaviour
 {
     public GameObject mine;
+    public bool isRandom = false;
     private GameObject[] mines;
     private bool isrunning = true;
     private Animator animator;
@@ -23,7 +24,8 @@ public class minelauncher : MonoBehaviour
         {
             isrunning = false;
 
-            yield return new WaitForSeconds(3f);
+            float waitTime = isRandom ? Random.value * 2 + 2 : 3; // if random range = [2, 4], else 3
+            yield return new WaitForSeconds(waitTime);
 
             this.animator.Play("mine_start");
 
