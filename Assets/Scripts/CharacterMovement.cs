@@ -112,7 +112,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Flip()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
+        float horizontal = InputManager.Instance.GetAxisRaw("Horizontal");
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
