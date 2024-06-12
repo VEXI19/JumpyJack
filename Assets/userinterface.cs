@@ -13,9 +13,9 @@ public class userinterface : MonoBehaviour
         Application.Quit();
     }
 
-    public void play(int number)
+    public void play(string name)
     {
-        SceneManager.LoadScene(number);
+        SceneManager.LoadScene(name);
     }
 
     public void pause()
