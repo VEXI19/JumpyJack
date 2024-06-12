@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FallingState : State
 {
+    private InputManager inputManager;
     public FallingState(CharacterMovement character, StateMachine stateMachine) : base(character, stateMachine) { }
 
     public override void Enter()
@@ -20,15 +21,13 @@ public class FallingState : State
         {
             stateMachine.ChangeState(character.jumpingState);
         }
-        if (InputManager.Instance.GetAxisRaw("Horizontal") != 0 )
+        if (character.inventory.Climbing && ((Input.GetKey(InputManager.Instance.left) && character.isTouchingWallLeft) || (Input.GetKey(InputManager.Instance.right) && character.isTouchingWallRight)))
         {
-            if (character.isTouchingWall)
-            {
-                stateMachine.ChangeState(character.climbingState);
-            } else
-            {
-                stateMachine.ChangeState(character.movingState);
-            }
+           stateMachine.ChangeState(character.climbingState);
+        }
+        if ((InputManager.Instance.GetAxis("Horizontal") < 0 && !character.isTouchingWallLeft) || (InputManager.Instance.GetAxis("Horizontal") > 0 && !character.isTouchingWallRight))
+        {
+            stateMachine.ChangeState(character.movingState);
         }
         
     }
