@@ -14,8 +14,8 @@ public class CharacterMovement : MonoBehaviour
     public LayerMask groundLayer;
     private float rayLength = 0.1f;
     public Transform groundCheckRight, groundCheckLeft, shoulderCheckLeft, shoulderCheckRight;
-    private Vector2[] wallChecksRight = new Vector2[11];
-    private Vector2[] wallChecksLeft = new Vector2[11];
+    private Vector2[] wallChecksRight = new Vector2[12];
+    private Vector2[] wallChecksLeft = new Vector2[12];
 
     [HideInInspector] public bool isTouchingWallLeft;
     [HideInInspector] public bool isTouchingWallRight;
@@ -75,10 +75,10 @@ public class CharacterMovement : MonoBehaviour
         {
             if (IsFacingRight)
             {
-                wallChecksRight[i] = new Vector2(transform.position.x + 0.374f, transform.position.y + (i / 10f - 0.5f));
+                wallChecksRight[i] = new Vector2(transform.position.x + 0.31f, transform.position.y + (i / 10f - 0.6f));
             } else
             {
-                wallChecksRight[i] = new Vector2(transform.position.x + 0.435f, transform.position.y + (i / 10f - 0.5f));
+                wallChecksRight[i] = new Vector2(transform.position.x + 0.373f, transform.position.y + (i / 10f - 0.6f));
             }
         }
 
@@ -86,10 +86,10 @@ public class CharacterMovement : MonoBehaviour
         {
             if (IsFacingRight)
             {
-                wallChecksLeft[i] = new Vector2(transform.position.x - 0.435f, transform.position.y - (i / 10f - 0.5f));
+                wallChecksLeft[i] = new Vector2(transform.position.x - 0.373f, transform.position.y + (i / 10f - 0.6f));
             } else
             {
-                wallChecksLeft[i] = new Vector2(transform.position.x - 0.374f, transform.position.y - (i / 10f - 0.5f));
+                wallChecksLeft[i] = new Vector2(transform.position.x - 0.31f, transform.position.y + (i / 10f - 0.6f));
             }
         }
     }
@@ -133,7 +133,7 @@ public class CharacterMovement : MonoBehaviour
             bool isTouchingShoulderLeft = Physics2D.Raycast(shoulderCheckLeft.position, isFacingRight ? Vector2.left : Vector2.right, rayLength, groundLayer);
             bool isTouchingShoulderRight = Physics2D.Raycast(shoulderCheckRight.position, isFacingRight ? Vector2.right : Vector2.left, rayLength, groundLayer);
 
-        bool isTouchingWallLeftTemp = false;
+            bool isTouchingWallLeftTemp = false;
             bool isTouchingWallRightTemp = false;
 
             // Check if touching wall on right
@@ -185,9 +185,9 @@ public class CharacterMovement : MonoBehaviour
                 this.jumpCount = 0;
             }
 
-        Debug.Log($"Grounded Left: {isGroundedLeft}, Grounded Right: {isGroundedRight}");
-        Debug.Log($"Touching Shoulder Left: {isTouchingShoulderLeft}, Touching Shoulder Right: {isTouchingShoulderRight}");
-        Debug.Log($"Touching Wall Left: {isTouchingWallLeftTemp}, Touching Wall Right: {isTouchingWallRightTemp}");
+        //Debug.Log($"Grounded Left: {isGroundedLeft}, Grounded Right: {isGroundedRight}");
+        //Debug.Log($"Touching Shoulder Left: {isTouchingShoulderLeft}, Touching Shoulder Right: {isTouchingShoulderRight}");
+        //Debug.Log($"Touching Wall Left: {isTouchingWallLeftTemp}, Touching Wall Right: {isTouchingWallRightTemp}");
     }
 
 

@@ -1,6 +1,7 @@
 
 
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ClimbingState : State
@@ -25,14 +26,18 @@ public class ClimbingState : State
         }
         else if (Input.GetKeyDown(InputManager.Instance.jump))
         {
-            stateMachine.ChangeState(character.jumpingState);
+           stateMachine.ChangeState(character.jumpingState);
+        } 
+        else if (character.isTouchingWall && ((Input.GetKey(InputManager.Instance.left) && !character.isTouchingWallLeft) || (Input.GetKey(InputManager.Instance.right) && !character.isTouchingWallRight)))
+        {
+            stateMachine.ChangeState(character.movingState);
+        } else if (!character.isTouchingWall && InputManager.Instance.GetAxisRaw("Horizontal") != 0)
+        {
+            stateMachine.ChangeState(character.movingState);
         }
         else if (!character.isTouchingWall)
         {
             stateMachine.ChangeState(character.idleState);
-        } else if (character.isTouchingWall && ((InputManager.Instance.GetAxis("Horizontal") < 0 && character.isWallRight) || (InputManager.Instance.GetAxis("Horizontal") > 0 && !character.isWallRight)))
-        {
-            stateMachine.ChangeState(character.movingState);
         }
 
     }

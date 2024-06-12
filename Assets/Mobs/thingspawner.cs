@@ -6,6 +6,7 @@ public class thingspawner : MonoBehaviour
 {
     public GameObject thing;
     private GameObject[] things;
+    public bool isRandom = false;
     private bool isrunning = true;
 
     void Start()
@@ -21,7 +22,8 @@ public class thingspawner : MonoBehaviour
         {
             isrunning = false;
 
-            yield return new WaitForSeconds(3f);
+            float waitTime = isRandom ? Random.value * 2 + 2 : 3; // if random range = [2, 4], else 3
+            yield return new WaitForSeconds(waitTime);
 
             for (int i = 0; i < 20; i++)
             {
